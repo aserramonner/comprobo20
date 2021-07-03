@@ -240,7 +240,8 @@ class xv11():
         if b'ldsscanranges' not in self.sensor_dict:
             return ([],[])
         ranges = struct.unpack('<%sH' % self.sensor_dict[b'ldsscanranges'][0], self.sensor_dict[b'ldsscanranges'][1])
-        return ([r/1000.0 for r in ranges], [10.0]*len(ranges))
+        intensities = struct.unpack('<%sH' % self.sensor_dict[b'ldsscanintensities'][0], self.sensor_dict[b'ldsscanintensities'][1])
+        return ([r/1000.0 for r in ranges], [i for i in intensities])
 
     def resend_last_motor_command(self):
         if self.last_cmd:
